@@ -1,1 +1,1 @@
-# TSA-Design-Algorithm-GUI
+# Inverse Modeling and Component Selection for Twisted String Actuators
