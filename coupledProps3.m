@@ -103,7 +103,7 @@ while 1
     j = j + 1;
      %disp('Contraction range');
      %disp(abs(Xdiff(j-1)));
-    if toc(tStart) >= 10
+    if toc(tStart) > 10
         break
     end
 end

@@ -1,0 +1,76 @@
+clear; clc; close all; format compact;
+set(0,'defaultTextInterpreter','latex'); %trying to set the default
+set(0, 'defaultAxesTickLabelInterpreter','latex');
+set(0, 'defaultLegendInterpreter','latex');
+set(0,'defaultAxesFontSize',18);
+set(0, 'DefaultLineLineWidth', 2);
+set(groot, 'defaultFigureUnits', 'pixels', 'defaultFigurePosition', [440   278   560   420]);
+n = 10000;
+Fz0 = rand(n,1)*20;
+Fz_MAX = Fz0 + rand(n,1)*10;
+Si = rand(n,1)*(1000 - 100)+100;
+N = 2;
+strain_ideal = 0.3;
+R0 = 0.001;
+FP = randi(3,n,1);
+dt = (rand(n,1)*(10-0.2) + 0.2);
+dX = (rand(n,1)*(0.3-0.1) + 0.1);
+b_gain = 200:10:400;
+conv_len = zeros(n,1);
+tEnd = zeros(n,1);
+Xdiff = cell(n);
+mean_conv_len = zeros(length(b_gain),1);
+formatSpec = 'dt: %4.2f, dX: %4.3f, Fz0: %4.3f, Fz_MAX: %4.3f, Si: %4.3f, FP: %4.3f, i: %4.3f \n';
+[bX, bO, Kr, J, Fc, Tc, M] = dynamic_constants();
+dynamic_constants_ = [bX, bO, Kr, J, Fc, Tc, M];
+tau=0.1;
+ideal_vol=0;
+max_vol = Inf;
+Input_Voltage = 0;
+Price_Lim = 0;
+Mass_Lim = 0;
+min_volume = 0;
+L0=zeros(n,1);
+X0=zeros(n,1);
+K=zeros(n,1);
+W1=zeros(n,1);
+T=zeros(n,1);
+dOdt = cell(n,1);
+Tm=cell(n,1);
+P=cell(n,1);
+tf = zeros(n,1);
+s=cell(n,1);
+top_item = cell(n,1);
+top_vendor = cell(n,1);
+top_act_torque = zeros(n,1);
+top_min_dist=zeros(n,1);
+top_act_vol=zeros(n,1);
+top_act_mass=zeros(n,1);
+top_act_NLRPM=zeros(n,1);
+top_act_price=zeros(n,1);
+top_act_voltage=zeros(n,1);
+top_act_type=cell(n,1);
+for i = 1:n
+    fprintf(formatSpec,dt(i),dX(i),Fz0(i),Fz_MAX(i),Si(i),FP(i),i);
+    [L0(i),X0(i), K(i)] = dX2X0(dX(i), Fz0(i), Si(i), N,strain_ideal);
+    [dOdt{i}, Tm{i}, tf(i), P{i}, s{i}, Xdiff{i}, tEnd(i)] = ...
+        coupledProps3(R0, Fz0(i), Fz_MAX(i), FP(i), N, X0(i), L0(i), K(i), dt(i), dX(i), 200*dX(i),tau,dynamic_constants_);
+    conv_len(i) = length(Xdiff{i});
+    T(i) = max(Tm{i})*5;
+    W1(i) = (max(dOdt{i})/(max(Tm{i}) - T(i)))*(0 - T(i)) + 0;
+    W1(i) = W1(i)*60/2/pi;
+    T(i) = T(i)*10.197162129779; % convert (N*m) to (kg*cm), source: https://www.convertunits.com/from/N-m/to/kg-cm
+    [item_final, vendor, act_torque,~,~, min_dist,act_vol,act_mass,act_NLRPM,act_price,act_voltage,act_type] = ...
+    euclid_dist_fnctn2(W1(i), T(i), ideal_vol, max_vol, Input_Voltage,Price_Lim,Mass_Lim);
+    top_item{i}=vendor{1};
+    top_vendor{i}=vendor{1};
+    top_act_torque(i)=act_torque{1};
+    top_min_dist(i)=min_dist(1);
+    top_act_vol(i)=act_vol{1};
+    top_act_mass(i)=act_mass{1};
+    top_act_NLRPM(i)=act_NLRPM{1};
+    top_act_price(i)=act_price{1};
+    top_act_voltage(i)=act_voltage{1};
+    top_act_type{i}=act_type{1};
+end
+save(['MAT Files/sim9',num2str((now)),'.mat']);

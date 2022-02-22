@@ -1,0 +1,65 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="1685847272" file="G:\My Drive\NSTGRO 2020\TSA-Design-Algorithm-GUI\TSADesign_MATLAB_App2019a.prj" location="G:\My Drive\NSTGRO 2020\TSA-Design-Algorithm-GUI" name="TSADesign_MATLAB_App2019a" target="target.mlapps" target-name="Package App">
+    <param.appname>TSADesign_MATLAB_App2019a</param.appname>
+    <param.authnamewatermark>David Bombara</param.authnamewatermark>
+    <param.email>dbombara@nevada.unr.edu</param.email>
+    <param.company>University of Nevada, Reno</param.company>
+    <param.icon>${PROJECT_ROOT}\TSADesign_MATLAB_App_resources\icon_24.png</param.icon>
+    <param.icons />
+    <param.summary>A graphical user interface to design twisted string actuators.</param.summary>
+    <param.description>Paper title: "Inverse Modeling for Component Selection of Twisted String Actuators"
+Authors: David Bombara, Revanth Konda, Zunaed Kibria, and Jun Zhang</param.description>
+    <param.screenshot>C:\Users\dbomb\AppData\Local\Temp\tpb4b3437d_8957_40f0_97eb_9dda9d453f4a.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.output>C:\Users\dbomb\Downloads</param.output>
+    <param.guid>cdcb12d9-2168-45cd-a32b-304fb0daa179</param.guid>
+    <unset>
+      <param.icons />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\TSADesign.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\coupledProps3.m</file>
+      <file>${PROJECT_ROOT}\dX2O.m</file>
+      <file>${PROJECT_ROOT}\dX2X0.m</file>
+      <file>${PROJECT_ROOT}\euclid_dist_fnctn2.m</file>
+      <file>${PROJECT_ROOT}\Fz_fnctn.m</file>
+      <file>${PROJECT_ROOT}\TSADB.xlsx</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="C:\Users\dbomb" name="Downloads" optional="false">C:\Users\dbomb\Downloads</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2019a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
