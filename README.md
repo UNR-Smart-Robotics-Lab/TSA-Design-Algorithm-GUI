@@ -23,7 +23,7 @@ There are additionlly several assumptions that may be modified by the user:
 8. Time constant of the motor's velocity.
 9. Maximum linear strain of the TSA.
 
-At this stage, the algorithm chooses a string pair from the string database. The string is chosen as that whose stiffness is closest to the user's desired stiffness. The algorithm uses the radius of that corresponding string in the following computations. The user can view the stiffness, radius, and material of the selected string.
+At this stage, the algorithm chooses a string pair from the [string database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/string_database.xlsx). The string is chosen as that whose stiffness is closest to the user's desired stiffness. The algorithm uses the radius of that corresponding string in the following computations. The user can view the stiffness, radius, and material of the selected string.
 
 Next, the algorithm uses the *inverse static model* to compute:
 
@@ -40,7 +40,7 @@ Next, the algorithm uses the *inverse dynamic model* to compute:
 
 During the computation of the inverse dynamic model, the GUI also reports the (1) iterations to convergence and (2) the time to convergence.
 
-After the inverse dynamic model is solved, the top five most suitable motors are recommended to the user. The user can view qualitative metrics which are the vendor, model number, and type of motor. The user can also view the quantitative metrics of stall torque, free-run speed, mass, volume, price, and voltage. For each motor, the GUI also displays the "distance," which indicates how similar the motor's actual proprties are to the algorithm's computed properties. A lesser distance is better.
+After the inverse dynamic model is solved, the top five most suitable motors are recommended to the user from the [motor database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/TSADB.xlsx). The user can view qualitative metrics which are the vendor, model number, and type of motor. The user can also view the quantitative metrics of stall torque, free-run speed, mass, volume, price, and voltage. For each motor, the GUI also displays the "distance," which indicates how similar the motor's actual proprties are to the algorithm's computed properties. A lesser distance is better.
 
 Below is a screenshot of the algorithm:
 
