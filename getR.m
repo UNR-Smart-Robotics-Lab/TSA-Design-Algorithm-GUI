@@ -7,8 +7,12 @@ string_radius = T.Radius_mm_;
 string_norm_stiffness = T.NormalizedStiffness_N_;
 
 a = abs(K-string_norm_stiffness);
-[~,I] = mink(a,5);
+[~,I] = mink(a,3);
 
 R = string_radius(I);
 K_ = string_norm_stiffness(I);
-material = string_material{I};
+material = cell(3,1);
+for i = 1:length(I)
+    material{i} = string_material{I(i)};
+end
+end
