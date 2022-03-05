@@ -33,7 +33,7 @@ min_volume = 5000;
 % [item_final, price_final, vol_final] = euclid_dist_fnctn(W1, T, Input_Volume);
 [item_final, vendor,act_torque, torque, RPM] = ...
     euclid_dist_fnctn2(W1, T, ideal_volume, max_volume,12);
-item_final % Goal: 4698
+item_final; % Goal: 4698
 % 4841: T = 1.7; W = 2200
 % 4757:  T = 3, W = 1600
 figure

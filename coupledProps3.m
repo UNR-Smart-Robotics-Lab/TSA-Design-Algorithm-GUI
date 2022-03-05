@@ -1,9 +1,9 @@
 function [dOdt, Tm, tfinal, P, s, Xdiff, tEnd,O] = ...
     coupledProps3(R0, Fz0, Fz_MAX, FP, N, X0, L0, K, dt, dX, b,tau,dynamic_constants_)
-if nargin < 11
-    b = 324;
-    tau = 0.1;
-end
+% if nargin < 11
+%     b = 324;
+%     tau = 0.1;
+% end
 % if nargin < 13
 %     [bX, bO, Kr, J, Fc, Tc, M] = dynamic_constants();
 % end
@@ -41,7 +41,6 @@ while 1
     ddotX    = zeros(m,1);
     Fz       = ones(m,1) * Fz0./N;
     H        = zeros(m,1);
-    dFidt    = zeros(m,1);
 
     dOdt = dOdt_p*(1- exp(-tf_vec/tau));
     O = cumtrapz(tf_vec, dOdt);
@@ -69,21 +68,13 @@ while 1
         Ffr(i) = (Fc*sign(dXdt(i)) + bX*dXdt(i));
         F(i) = (M*ddotX(i) + Fz(i) + Ffr(i));
         Fi(i) = (F(i)./N./X(i).*X0); % fiber tension
-        % Fi(i) = K/L0*(X(i) - L0);
-        % dFidt(i) = K./L0*dXdt(i);
-        %dFidt(i) = (Fi(i) - Fi(i-1))/(tf_vec(i) - tf_vec(i-1));
         H(i) = (O(i).*R(i).^2./sqrt((L0.^2).*(1 + Fi(i)./K).^2 - O(i).^2.*R(i).^2));
-        %H(i) = (O(i)*R(i)^2)*dOdt(i)./(X(i));
-        % Unfiltered Acceleration
         ddotX_uf(i) = ((dXdt(i) - dXdt(i-1))./(tf_vec(i) - tf_vec(i-1)));
         if i <= 5
             ddotX(i) = ddotX_uf(i);
         else
             ddotX(i) = sum(ddotX_uf(i-4:i))./5;
         end
-        % Filtered Acceleartin
-        %ddotX_vec = sgolayfilt(ddotX_uf,3,5);
-        %ddotX(i) = ddotX_vec(i);
     end
     Xdiff(j) = real(X(1) - X(end) - dX);
     strain = (X(1) - X(end))./X(1);
@@ -101,36 +92,17 @@ while 1
         break
     end
     j = j + 1;
-     %disp('Contraction range');
-     %disp(abs(Xdiff(j-1)));
     if toc(tStart) > 10
         break
     end
 end
 tEnd = toc(tStart);
-% figure(1)
-% plot(j,tEnd,'.k'); hold on;
 s = nonzeros(s);
 Xdiff = nonzeros(Xdiff);
 % stiffness
 dSdO = 2.*(R0./(L0.^2 - O.^2.*R0.^2)).^2.*...
     (2.*L0.^2 - R0.^2.*O.^2./Kr.*R0.*O.^3 + L0.^3 ./ K .* O);
-%tfinal = (X(1) - X(end))./mean((dXdt)); % Time to complete actuation (actual)
 tfinal = (max(O) - min(O))./mean(dOdt);
-% figure(1)
-% subplot(4,3,1); plot(O); title('$O$');
-% subplot(4,3,2); plot(X); title('$X$');
-% subplot(4,3,3); plot(R); title('$R$');
-% subplot(4,3,4); plot(Fz); title('$F_z$');
-% subplot(4,3,5); plot(F); title('$F$');
-% subplot(4,3,6); plot(Ffr); title('$F_{fr}$');
-% subplot(4,3,7); plot(Fz); title('$F_z$');
-% subplot(4,3,8); plot(dRdt); title('$dR/dt$');
-% subplot(4,3,9); plot(ddotX); title('$\ddot{X}$');
-% subplot(4,3,10); plot(H); title('$H$');
-% subplot(4,3,11); plot(dOdt); title('$\dot{O}$')
-% subplot(4,3,12); plot(dXdt); title('$\dot{X}$')
-
 Tfr = bO*dOdt + Tc*sign(dOdt);
 alph = [0; diff(dOdt)./diff(tf_vec)];
 Tm = J.*alph + (H .* 0.5 .* dSdO.*F).*F + Tfr;
