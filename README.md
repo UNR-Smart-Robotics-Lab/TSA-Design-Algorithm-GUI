@@ -42,6 +42,16 @@ During the computation of the inverse dynamic model, the GUI also reports the (1
 
 After the inverse dynamic model is solved, the top five most suitable motors are recommended to the user from the [motor database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/TSADB.xlsx). The user can view qualitative metrics which are the vendor, model number, and type of motor. The user can also view the quantitative metrics of stall torque, free-run speed, mass, volume, price, and voltage. For each motor, the GUI also displays the "distance," which indicates how similar the motor's actual proprties are to the algorithm's computed properties. A lesser distance is better.
 
-Below is a screenshot of the algorithm:
+Below are screenshots of the GUI:
 
-![gui-screenshot](tsa-design-gui-screenshot.png)
+![GUI 1](gui1.png)
+
+![GUI 2](gui2.png)
+
+![GUI 3](gui3.png)
+
+![GUI 4](gui4.png)
+
+![GUI 5](gui5.png)
+
+
