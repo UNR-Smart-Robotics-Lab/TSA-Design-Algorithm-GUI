@@ -1,5 +1,5 @@
 function [dOdt, Tm, tfinal, P, s, Xdiff, tEnd,O] = ...
-    coupledProps3(R0, Fz0, Fz_MAX, FP, N, X0, L0, K, dt, dX, b,tau,dynamic_constants_)
+    coupledProps3(R0, Fz0, Fz_MAX, FP, N, X0, L0, K, dt, dX,Xp, b,tau,dynamic_constants_)
 % if nargin < 11
 %     b = 324;
 %     tau = 0.1;
@@ -14,21 +14,30 @@ J = dynamic_constants_(4);
 Fc = dynamic_constants_(5);
 Tc = dynamic_constants_(6);
 M = dynamic_constants_(7);
-m = 1000; % level of discretization
+m = 10000; % level of discretization
 
 Xmin = X0 - dX; % unloaded contraction range
-tf_vec = (linspace(0, dt, m))';
+
 j = 1; % initialized loop counter
 % Initial guess for Omax using variable radius, finite stiffness
-[O_pre, ~] = dX2O(X0, dX, Fz_MAX, R0, N, L0, K);
-Omax = max(O_pre); 
-dOdt_p = Omax./dt;
+[O_pre, ~] = dX2O(X0, dX, Fz_MAX, R0, N, L0, K, Xp);
+%[O_pre2, ~] = dX2O(X0, dX, Fz_MAX, R0, N, L0, K, Xp);
+
+Omax = max(O_pre);
+Omin = min(O_pre);
+%max(O_pre2)
+%dt
+%dt = dt*(max(O_pre)./max(O_pre2))
+tf_vec = (linspace(0, dt, m))';
+%dX = dX+Xp;
+
+dOdt_p = (Omax-Omin)./dt;
 tStart = tic;
 s = zeros(10000, 1);
 Xdiff = zeros(10000,1);
 while 1
     % Initializing Arrays
-    X        = ones(m, 1) * X0;
+    X        = ones(m, 1) * (X0-Xp);
     R        = ones(m, 1) * R0;
     Fi       = ones(m,1) * Fz0./N;
     dXdt     = zeros(m,1);
@@ -43,7 +52,7 @@ while 1
     H        = zeros(m,1);
 
     dOdt = dOdt_p*(1- exp(-tf_vec/tau));
-    O = cumtrapz(tf_vec, dOdt);
+    O = cumtrapz(tf_vec, dOdt) + Omin;
     
     % For i = 1
     H(1) = (O(1).*R(1).^2./sqrt((L0.^2).*(1 + Fi(1)./K).^2 - O(1).^2.*R(1).^2));
@@ -76,14 +85,14 @@ while 1
             ddotX(i) = sum(ddotX_uf(i-4:i))./5;
         end
     end
-    Xdiff(j) = real(X(1) - X(end) - dX);
-    strain = (X(1) - X(end))./X(1);
+    Xdiff(j) = real(X0 - min(real(X)) - dX-Xp);
+    %strain = (X(1) - X(end))./X(1);
     %if abs(Xdiff(j)) > 1e-3*dX
-    if abs(Xdiff(j)) > 1e-3*dX
+    if abs(Xdiff(j)) > 1e-3*(dX)
         %  Omax = Omax - s * sign((X0 - min(X)) - dX);
         % Adjust dOdt_p instead
         s(j) = b*abs(Xdiff(j));
-        if (X0 - min(real(X))) < dX
+        if (X0 - real(X(end))) < dX + Xp
             dOdt_p = dOdt_p + s(j);
         else
             dOdt_p = dOdt_p - s(j);
@@ -108,3 +117,4 @@ alph = [0; diff(dOdt)./diff(tf_vec)];
 Tm = J.*alph + (H .* 0.5 .* dSdO.*F).*F + Tfr;
 % Power = torque * angular speed
 P = Tm.*dOdt; % required power OUTPUT from motor (not including efficiency)
+save(['designAlgoResults/design_algorithm_results_',num2str(m),'_.mat']);
