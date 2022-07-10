@@ -44,14 +44,14 @@ After the inverse dynamic model is solved, the top five most suitable motors are
 
 Below are screenshots of the GUI:
 
-![GUI 1](gui1.png)
+![GUI 1](gui1.jpg)
 
-![GUI 2](gui2.png)
+![GUI 2](gui2.jpg)
 
-![GUI 3](gui3.png)
+![GUI 3](gui3.jpg)
 
-![GUI 4](gui4.png)
+![GUI 4](gui4.jpg)
 
-![GUI 5](gui5.png)
+![GUI 5](gui5.jpg)
 
 
