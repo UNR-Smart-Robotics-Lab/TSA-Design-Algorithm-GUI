@@ -23,7 +23,7 @@ There are additionlly several assumptions that may be modified by the user:
 8. Time constant of the motor's velocity.
 9. Maximum linear strain of the TSA.
 
-At this stage, the algorithm chooses a string pair from the [string database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/string_database.xlsx). The string is chosen as that whose stiffness is closest to the user's desired stiffness. The algorithm uses the radius of that corresponding string in the following computations. The user can view the stiffness, radius, and material of the selected string.
+At this stage, the algorithm chooses a string pair from the [string database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/tsa-design-algorithm/string_database.xlsx). The string is chosen as that whose stiffness is closest to the user's desired stiffness. The algorithm uses the radius of that corresponding string in the following computations. The user can view the stiffness, radius, and material of the selected string.
 
 Next, the algorithm uses the *inverse static model* to compute:
 
