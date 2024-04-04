@@ -40,18 +40,16 @@ Next, the algorithm uses the *inverse dynamic model* to compute:
 
 During the computation of the inverse dynamic model, the GUI also reports the (1) iterations to convergence and (2) the time to convergence.
 
-After the inverse dynamic model is solved, the top five most suitable motors are recommended to the user from the [motor database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/TSADB.xlsx). The user can view qualitative metrics which are the vendor, model number, and type of motor. The user can also view the quantitative metrics of stall torque, free-run speed, mass, volume, price, and voltage. For each motor, the GUI also displays the "distance," which indicates how similar the motor's actual proprties are to the algorithm's computed properties. A lesser distance is better.
+After the inverse dynamic model is solved, the top five most suitable motors are recommended to the user from the [motor database](https://github.com/UNR-Smart-Robotics-Lab/TSA-Design-Algorithm-GUI/blob/main/tsa-design-algorithm/TSADB.xlsx). The user can view qualitative metrics which are the vendor, model number, and type of motor. The user can also view the quantitative metrics of stall torque, free-run speed, mass, volume, price, and voltage. For each motor, the GUI also displays the "distance," which indicates how similar the motor's actual proprties are to the algorithm's computed properties. A lesser distance is better.
 
 Below are screenshots of the GUI:
 
-![GUI 1](gui1.jpg)
+![GUI 1](img/gui1.jpg)
 
-![GUI 2](gui2.jpg)
+![GUI 2](img/gui2.jpg)
 
-![GUI 3](gui3.jpg)
+![GUI 3](img/gui3.jpg)
 
-![GUI 4](gui4.jpg)
+![GUI 4](img/gui4.jpg)
 
-![GUI 5](gui5.jpg)
-
-
+![GUI 5](img/gui5.jpg)
